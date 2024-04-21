@@ -1,0 +1,69 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    username: iforum
+    password: 8899174Qq
+    url: jdbc:mysql://192.168.31.231:3306/iforum?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      database: 0
+      connect-timeout: 5s
+      host: 192.168.31.231
+      port: 6379
+      password: xiaofeng
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 8
+          max-wait: 5s
+          min-idle: 1
+  rabbitmq:
+    addresses: 192.168.31.231
+    port: 5672
+    virtual-host: foro
+    username: foro
+    password: foro
+    listener:
+      simple:
+        prefetch: 1
+      direct:
+        prefetch: 1
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.sjxy.web
+  level:
+    com:
+      baomidou:
+        mybatisplus: DEBUG
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    RocketmqClient: ERROR
+
+
+meilisearch:
+  endPoint: http://192.168.31.231:7700
+  masterKey: HmPEKZhcoANzRt3DTPhRQVRxPEVZw7m2TymKwKhs_Xitsrm

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjxy.bbs.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.sjxy.bbs.entity.po.UserPO">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="emailVerified" column="email_verified" jdbcType="TINYINT"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="TINYINT"/>
+            <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+            <result property="backgroundImage" column="background_image" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="score" column="score" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="topicCount" column="topic_count" jdbcType="INTEGER"/>
+            <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
+            <result property="followCount" column="follow_count" jdbcType="INTEGER"/>
+            <result property="collectCount" column="collect_count" jdbcType="INTEGER"/>
+            <result property="fansCount" column="fans_count" jdbcType="INTEGER"/>
+            <result property="forbiddenEndTime" column="forbidden_end_time" jdbcType="TIMESTAMP"/>
+            <result property="muteEndTime" column="mute_end_time" jdbcType="TIMESTAMP"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="createUsername" column="create_username" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="updateUsername" column="update_username" jdbcType="VARCHAR"/>
+            <result property="version" column="version" jdbcType="INTEGER"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,username,email,
+        email_verified,nickname,avatar,
+        gender,birthday,background_image,
+        password,description,score,
+        status,topic_count,comment_count,
+        follow_count,collect_count,fans_count,
+        forbidden_end_time,create_time,create_by,
+        create_username,update_time,update_by,
+        update_username,version,deleted
+    </sql>
+    <select id="get" resultType="com.sjxy.bbs.entity.po.UserPO">
+        select * from t_user
+
+        <where>
+            id = #{id}
+            and deleted = 0
+        </where>
+
+    </select>
+    <select id="getAllUserRegisterStatistic" resultType="com.sjxy.bbs.entity.po.UserRegisterStatisticPO">
+        select date(create_time) as time,count(*) as count from t_user
+        where create_time between date_sub(date(now()),INTERVAL 30 day) and date(now())
+        group by date(create_time)
+    </select>
+    <select id="query" resultType="com.sjxy.bbs.entity.po.UserPO">
+        select * from t_user
+        <where>
+            <if test="record != null">
+                <if test="record.id != null and record.id != ''">
+                    id = #{record.id}
+                </if>
+                <if test="record.username != null and record.username != ''">
+                    and username = #{record.username}
+                </if>
+                <if test="record.email != null and record.email != ''">
+                    and email = #{record.email}
+                </if>
+
+            </if>
+            and deleted = 0
+        </where>
+    </select>
+</mapper>

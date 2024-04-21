@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjxy.bbs.mapper.NoticeMapper">
+
+    <resultMap id="BaseResultMap" type="com.sjxy.bbs.entity.po.NoticePO">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="image" column="image" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="createUsername" column="create_username" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="updateUsername" column="update_username" jdbcType="VARCHAR"/>
+            <result property="version" column="version" jdbcType="INTEGER"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,image,user_id,
+        content,create_time,create_by,
+        create_username,update_time,update_by,
+        update_username,version,deleted
+    </sql>
+
+    <resultMap id="detailResultMap" type="com.sjxy.bbs.entity.po.NoticePO">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+        <result property="createUsername" column="create_username" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+        <result property="updateUsername" column="update_username" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+        <association property="user" fetchType="lazy" column="user_id" select="com.sjxy.bbs.mapper.UserMapper.get"></association>
+    </resultMap>
+    <select id="query" resultMap="detailResultMap">
+        select * from t_notice
+        <where>
+            <if test="record != null">
+                <if test="record.userId != null">
+                    user_id = #{record.userId}
+                </if>
+            </if>
+            and deleted = 0
+        </where>
+        order by create_time desc
+    </select>
+    <insert id="insertBatch">
+        insert into t_notice(image,user_id,content,
+        create_time,
+        create_by,create_username,update_time,
+        update_by,update_username,version,
+        deleted)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.image,jdbcType=VARCHAR},#{item.userId,jdbcType=NUMERIC},#{item.content,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.createBy,jdbcType=NUMERIC},#{item.createUsername,jdbcType=VARCHAR},#{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.updateBy,jdbcType=NUMERIC},#{item.updateUsername,jdbcType=VARCHAR},#{item.version,jdbcType=NUMERIC},
+            #{item.deleted,jdbcType=NUMERIC})
+        </foreach>
+    </insert>
+</mapper>

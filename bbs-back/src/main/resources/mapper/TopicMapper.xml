@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="generator.mapper.TopicMapper">
+
+    <resultMap id="BaseResultMap" type="generator.domain.TopicPO">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="tagId" column="tag_id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="summary" column="summary" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="imageList" column="image_list" jdbcType="VARCHAR"/>
+            <result property="recommend" column="recommend" jdbcType="TINYINT"/>
+            <result property="recommendTime" column="recommend_time" jdbcType="TIMESTAMP"/>
+            <result property="sticky" column="sticky" jdbcType="TINYINT"/>
+            <result property="stickyTime" column="sticky_time" jdbcType="TIMESTAMP"/>
+            <result property="viewCount" column="view_count" jdbcType="BIGINT"/>
+            <result property="commentCount" column="comment_count" jdbcType="BIGINT"/>
+            <result property="likeCount" column="like_count" jdbcType="BIGINT"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="lastCommentTime" column="last_comment_time" jdbcType="BIGINT"/>
+            <result property="lastCommentUserId" column="last_comment_user_id" jdbcType="BIGINT"/>
+            <result property="ip" column="ip" jdbcType="VARCHAR"/>
+            <result property="ipLocation" column="ip_location" jdbcType="VARCHAR"/>
+            <result property="extraData" column="extra_data" jdbcType="VARCHAR"/>
+            <result property="lock" column="lock" jdbcType="TINYINT"/>
+            <result property="lockTime" column="lock_time" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="createUsername" column="create_username" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="updateUsername" column="update_username" jdbcType="VARCHAR"/>
+            <result property="version" column="version" jdbcType="INTEGER"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,tag_id,user_id,
+        title,summary,content,
+        image_list,recommend,recommend_time,
+        sticky,sticky_time,view_count,
+        comment_count,like_count,status,
+        last_comment_time,last_comment_user_id,ip,
+        ip_location,extra_data,lock,
+        lock_time,create_time,create_by,
+        create_username,update_time,update_by,
+        update_username,version,deleted
+    </sql>
+</mapper>

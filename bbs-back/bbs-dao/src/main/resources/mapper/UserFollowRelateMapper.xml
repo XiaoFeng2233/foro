@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjxy.bbs.mapper.UserFollowRelateMapper">
+
+    <resultMap id="BaseResultMap" type="com.sjxy.bbs.entity.po.UserFollowRelatePO">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="followUserId" column="follow_user_id" jdbcType="BIGINT"/>
+            <result property="followedUserId" column="followed_user_id" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="createUsername" column="create_username" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="updateUsername" column="update_username" jdbcType="VARCHAR"/>
+            <result property="version" column="version" jdbcType="INTEGER"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,follow_user_id,followed_user_id,
+        create_time,create_by,create_username,
+        update_time,update_by,update_username,
+        version,deleted
+    </sql>
+
+    <resultMap id="detailResultMap" type="com.sjxy.bbs.entity.po.UserFollowRelatePO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="followUserId" column="follow_user_id" jdbcType="BIGINT"/>
+        <result property="followedUserId" column="followed_user_id" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+        <result property="createUsername" column="create_username" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+        <result property="updateUsername" column="update_username" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+        <association property="followedUser" select="com.sjxy.bbs.mapper.UserMapper.get" fetchType="lazy" column="followed_user_id"></association>
+        <association property="followUser" select="com.sjxy.bbs.mapper.UserMapper.get" fetchType="lazy" column="follow_user_id"></association>
+    </resultMap>
+
+    <select id="query" resultMap="detailResultMap">
+        select * from t_user_follow_relate
+        <where>
+            <if test="record != null">
+                <if test="record.followUserId != null">
+                    follow_user_id = #{record.followUserId}
+                </if>
+                 <if test="record.followedUserId != null">
+                     and followed_user_id = #{record.followedUserId}
+                 </if>
+            </if>
+            and deleted = 0
+        </where>
+    </select>
+    <select id="list" resultType="com.sjxy.bbs.entity.po.UserFollowRelatePO">
+        select * from t_user_follow_relate
+        <where>
+            <if test="record != null">
+                <if test="record.followUserId != null">
+                    follow_user_id = #{record.followUserId}
+                </if>
+                <if test="record.followedUserId != null">
+                    and followed_user_id = #{record.followedUserId}
+                </if>
+            </if>
+            and deleted = 0
+        </where>
+    </select>
+    <select id="get" resultMap="detailResultMap">
+        select * from t_user_follow_relate
+        <where>
+            <if test="record != null">
+                <if test="record.followUserId != null">
+                    follow_user_id = #{record.followUserId}
+                </if>
+                <if test="record.followedUserId != null">
+                    and followed_user_id = #{record.followedUserId}
+                </if>
+            </if>
+            and deleted = 0
+        </where>
+        limit 1
+    </select>
+</mapper>

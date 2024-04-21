@@ -1,0 +1,41 @@
+server:
+  port: 8888
+spring:
+  rabbitmq:
+    addresses: 192.168.31.231
+    port: 5672
+    virtual-host: foro
+    username: foro
+    password: foro
+  datasource:
+    druid:
+      username: root
+      password: 8899174Qq!@#
+      url: jdbc:mysql://124.221.145.167:3366/iforum?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      database: 0
+      connect-timeout: 5s
+      host: 192.168.31.231
+      port: 6379
+      password: xiaofeng
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 8
+          max-wait: 5s
+          min-idle: 1
+      timeout: 5000
+
+logging:
+  level:
+    RocketmqClient: ERROR
+  file:
+    name: foro.log
+
+
+
+meilisearch:
+  endPoint: 1
+  masterKey: 2
